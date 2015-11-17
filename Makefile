@@ -1,4 +1,11 @@
-all: test1
+all: test_preprocessed 
+
+
+#This Test is failing
+test_preprocessed:
+	g++ -shared -fPIC -o libmyLib.so LibPreprocessed.cpp  -O2
+	g++ -o main -std=c++11 mainPreprocessed.cpp -L. -l myLib
+	LD_LIBRARY_PATH=$$LD_LIBRARY_PATH:. ./main
 
 #This Test is failing
 test1:

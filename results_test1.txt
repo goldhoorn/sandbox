@@ -1,0 +1,50 @@
+Elements: 10
+	 unique_manual              : 0.000006
+	 unique_auto_signarue       : 0.000005
+	 unique_template_signature  : 0.000004
+	 unique_with_move           : 0.000019
+	 unique_with_iterators      : 0.000012
+	 Size after (can be random):7
+Elements: 100
+	 unique_manual              : 0.000390
+	 unique_auto_signarue       : 0.000040
+	 unique_template_signature  : 0.000039
+	 unique_with_move           : 0.000123
+	 unique_with_iterators      : 0.000116
+	 Size after (can be random):97
+Elements: 1000
+	 unique_manual              : 0.016739
+	 unique_auto_signarue       : 0.000267
+	 unique_template_signature  : 0.000267
+	 unique_with_move           : 0.000677
+	 unique_with_iterators      : 0.000647
+	 Size after (can be random):997
+Elements: 10000
+	 unique_manual              : 1.488870
+	 unique_auto_signarue       : 0.003224
+	 unique_template_signature  : 0.003448
+	 unique_with_move           : 0.008082
+	 unique_with_iterators      : 0.007868
+	 Size after (can be random):9997
+Elements: 100000
+	 unique_manual              : 148.549244
+	 unique_auto_signarue       : 0.039156
+	 unique_template_signature  : 0.038805
+	 unique_with_move           : 0.100050
+	 unique_with_iterators      : 0.099150
+	 Size after (can be random):99997
+Elements: 1000000
+	 unique_auto_signarue       : 0.457254
+	 unique_template_signature  : 0.457869
+	 unique_with_move           : 1.520745
+	 unique_with_iterators      : 1.579709
+	 Size after (can be random):999997
+Elements: 10000000
+	 unique_auto_signarue       : 5.334925
+	 unique_template_signature  : 5.346632
+	 unique_with_move           : 20.537326
+	 unique_with_iterators      : 21.001448
+	 Size after (can be random):9999997
+Elements: 100000000
+	 unique_auto_signarue       : 59.736078
+	 unique_template_signature  : 59.744539

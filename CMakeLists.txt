@@ -9,6 +9,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
 ADD_EXECUTABLE(test1 test1.cpp)
-ADD_EXECUTABLE(test2 test2.cpp)
-ADD_EXECUTABLE(test3 test3.cpp)
+#ADD_EXECUTABLE(test2 test2.cpp)
+#ADD_EXECUTABLE(test3 test3.cpp)
 

@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 2.4 FATAL_ERROR)
+PROJECT (sandbox)
+SET(PROJECT_VERSION 1.0)
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++1z")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopenmp -std=gnu++1z")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fopenmp")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+
+ADD_EXECUTABLE(test1 test1.cpp)
+ADD_EXECUTABLE(test2 test2.cpp)
+ADD_EXECUTABLE(test3 test3.cpp)
+

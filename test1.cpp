@@ -39,7 +39,8 @@ void unique_template_signature(A &arr, B begin, B end)
     arr.erase(std::unique(begin, end), end);
 }
 
-void unique_with_move(auto &arr, auto begin, auto end)
+// This might have no benefit since the int need no time for copying instead of moving
+void unique_with_set_and_move(auto &arr, auto begin, auto end)
 {
     decltype(std::remove_reference(*arr.data())) v;
     std::set<decltype(v)> m;
@@ -52,7 +53,7 @@ void unique_with_move(auto &arr, auto begin, auto end)
     }
 }
 
-void unique_with_iterators(auto &arr, auto begin, auto end)
+void unique_with_set_and_iterators(auto &arr, auto begin, auto end)
 {
     decltype(std::remove_reference(*arr.data())) v;
     std::set<decltype(v)> m(begin, end);
@@ -61,9 +62,9 @@ void unique_with_iterators(auto &arr, auto begin, auto end)
 }
 
 template <typename T>
-auto generate_vector(size_t size)
+auto generate_vector(size_t size, bool limited)
 {
-    std::uniform_int_distribution<T> dist(std::numeric_limits<T>::min(), std::numeric_limits<T>::max());
+    std::uniform_int_distribution<T> dist(limited?0:std::numeric_limits<T>::min(), limited?(size/2.0):std::numeric_limits<T>::max());
     std::vector<T> arr(size);
     std::default_random_engine gen;
     std::generate(arr.begin(), arr.end(), [&]() { return dist(gen); });
@@ -77,47 +78,36 @@ auto generate_vector(size_t size)
     return arr;
 }
 
-template <>
-auto generate_vector<std::string>(size_t size)
-{
-    std::vector<std::string> arr(size);
-    for (auto &e : arr) {
-        e.resize(50);
-    }
-    // Make sure we have a few doble-elements within the list...
-    if (size < 10) throw std::invalid_argument("generate vectors must be called with at least 10");  // Be lazy for the next lines
-
-    arr[0] = "Hallo";
-    arr[3] = arr[0];
-    arr[4] = arr[0];
-    arr[size - 1] = arr[0];
-
-    return arr;
-}
-
 template <typename T>
-void check_runtime(size_t size)
+void check_runtime(size_t size, bool limited)
 {
-    auto v = generate_vector<T>(size);
+    auto v = generate_vector<T>(size,limited);
 
     // We have to define a lambda here because the auto type could ne resolved otherwise
     std::vector<std::function<void(decltype((v)), decltype(v.begin()), decltype(v.end()))>> arr(
         {[](decltype(v) & a, decltype(v.begin()) b, decltype(v.end()) c) { unique_manual(a, b, c); },
          [](decltype(v) & a, decltype(v.begin()) b, decltype(v.end()) c) { unique_auto_signarue(a, b, c); },
          [](decltype(v) & a, decltype(v.begin()) b, decltype(v.end()) c) { unique_template_signature(a, b, c); },
-         [](decltype(v) & a, decltype(v.begin()) b, decltype(v.end()) c) { unique_with_move(a, b, c); },
-         [](decltype(v) & a, decltype(v.begin()) b, decltype(v.end()) c) { unique_with_iterators(a, b, c); }});
+         [](decltype(v) & a, decltype(v.begin()) b, decltype(v.end()) c) { unique_with_set_and_move(a, b, c); },
+         [](decltype(v) & a, decltype(v.begin()) b, decltype(v.end()) c) { unique_with_set_and_iterators(a, b, c); }});
 
-    std::vector<std::string> names = {"unique_manual              ", "unique_auto_signarue       ", "unique_template_signature  ", "unique_with_move           ", "unique_with_iterators      "};
+    std::vector<std::string> names = {
+        "unique_manual                  ",
+        "unique_auto_signarue           ",
+        "unique_template_signature      ",
+        "unique_with_set_and_move       ",
+        "unique_with_set_and_iterators  "};
 
-    if(size > 100000){
-        //Took to long skipping this
+    if (size > 100000) {
+        // Took to long skipping this
         arr.erase(arr.begin());
         names.erase(names.begin());
     }
+
     assert(names.size() == arr.size());
 
     size_t prev_elems = 0;
+    if(limited) std::cout << "Limited ";
     std::cout << "Elements: " << size << std::endl;
     for (size_t i = 0; i < arr.size(); i++) {
         // Copy the data to have the same data each run
@@ -141,7 +131,8 @@ void check_runtime(size_t size)
 
 int main(int argc, char **argv)
 {
-    for (size_t i = 1; i < 10; ++i) {
-        check_runtime<int>(pow(10, i));
+    for (size_t i = 1; i < 8; ++i) {
+        check_runtime<int>(pow(10, i),false);
+        check_runtime<int>(pow(10, i),true);
     }
 }

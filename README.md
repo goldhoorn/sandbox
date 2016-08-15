@@ -3,6 +3,10 @@
 This package illsutrates a error on GCC 4.2 
 Run this example on a regular ubuntu15.10
 
+Background Info:
+* https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68195
+* http://stackoverflow.com/questions/33475069/gcc5-2-abi-change-compatibility-guaranteed
+
 Needed deps:
 * `sudo apt-get install libboost-math-dev`
 

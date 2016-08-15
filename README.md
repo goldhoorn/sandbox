@@ -1,2 +1,1 @@
-Look at this package branches for several code i want to share.
-Its used for examples, issues, proof of concepts and much more
+C++ Language features, currently analysing unique and sort functions besides new c++11, c++14, c++17 language features.
